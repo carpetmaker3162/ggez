@@ -86,8 +86,6 @@ if __name__ == "__main__":
                 problem.input_buffer += new_input
                 problem.display_buffer += new_input
 
-            log(problem.display_buffer)
-
             if problem.input_buffer.strip() == str(problem.ans):
                 elapsed = time.time() - start
                 if best is None or elapsed < best:
