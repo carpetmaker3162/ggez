@@ -8,9 +8,9 @@ import time
 MODES = ["ADD", "SUB", "MUL"]
 
 RANGES = {
-    "ADD": (range(1, 200), range(1, 200)),
-    "SUB": (range(1, 200), range(1, 200)),
-    "MUL": (range(1, 50), range(2, 7))
+    "ADD": (range(10, 200), range(10, 200)),
+    "SUB": (range(10, 200), range(10, 200)),
+    "MUL": (range(2, 50), range(2, 7))
 }
 
 OPERATOR = {
