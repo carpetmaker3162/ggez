@@ -1,4 +1,5 @@
 import os
+import json
 
 def _unix_getch():
     """
@@ -30,3 +31,17 @@ else:
 def log(content="", end="\n"):
     with open("debug_logs.txt", "a") as f:
         f.write(str(content) + end)
+
+def save(data: dict):
+    with open(".best_scores.json", "w") as f:
+        f.write(json.dumps(data))
+
+def load():
+    with open(".best_scores.json", "r") as f:
+        data = f.read()
+    return json.loads(data)
+
+def reset():
+    with open(".best_scores.json", "w") as f:
+        data = json.dumps({"ADD": None, "SUB": None, "MUL": None})
+        f.write(data)

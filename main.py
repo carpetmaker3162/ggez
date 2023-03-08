@@ -1,5 +1,5 @@
 import random
-from utils import getch, log
+from utils import getch, log, load, save
 from screen import Screen, Object
 import sys
 import os
@@ -25,6 +25,8 @@ SYMBOL = {
     "MUL": "*"
 }
 
+BEST = load()
+
 class Problem:
     def __init__(self, mode=None):
         if not mode:
@@ -44,7 +46,6 @@ class Problem:
 
 if __name__ == "__main__":
     w, h = os.get_terminal_size() 
-    best = None
 
     mode = []
     for arg in sys.argv:
@@ -54,6 +55,7 @@ if __name__ == "__main__":
     while True:
         problem = Problem(mode)
         start = None
+        best = BEST[problem.mode]
 
         while True:
             screen = Screen(w, h-2, default_fill = " ")
@@ -61,7 +63,7 @@ if __name__ == "__main__":
             screen.draw(0, 0, obj1)
 
             if best is not None:
-                obj2 = Object([[*f"Best: {best:.3f}"]], {})
+                obj2 = Object([[*f"Best: {best:.4f}s"]], {})
                 screen.draw(0, 10, obj2)
 
             screen.display()
@@ -78,6 +80,8 @@ if __name__ == "__main__":
                 problem.input_buffer = problem.input_buffer[:-1]
             elif new_input == chr(0x3):
                 exit()
+            elif new_input == chr(0x20):
+                break
             elif new_input in "0123456789-":
                 problem.input_buffer += new_input
                 problem.display_buffer += new_input
@@ -87,5 +91,6 @@ if __name__ == "__main__":
             if problem.input_buffer.strip() == str(problem.ans):
                 elapsed = time.time() - start
                 if best is None or elapsed < best:
-                    best = elapsed
+                    BEST[problem.mode] = elapsed
+                    save(BEST)
                 break
